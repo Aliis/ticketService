@@ -50,6 +50,7 @@
         },
         methods: {
             createTicket() {
+                this.$root.$emit('ticketCreated')
                 this.dialog = true
             }
         }

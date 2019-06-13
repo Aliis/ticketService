@@ -116,6 +116,9 @@
             this.$root.$on('editTicket', (ticketObj, name) => {
                 this.getTicketContent(ticketObj, name)
             })
+            this.$root.$on('ticketCreated', () => {
+                this.resetForm()
+            })
         }
     }
 </script>
