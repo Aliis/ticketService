@@ -41,7 +41,7 @@
                 </v-flex>
             </v-layout>
         </v-container>
-        <NewTicket :visible="dialog" @close="dialog=false"></NewTicket>
+        <new-ticket :visible="dialog" @close="dialog=false"></new-ticket>
     </div>
 </template>
 
@@ -61,7 +61,8 @@
             changeTicket(ticketObj) {
                 let findTicketById = what => this.$store.state.tickets.find(element => element.id === what)
                 let currentTicket = findTicketById(ticketObj.id)
-                this.$root.$emit('editTicket', currentTicket, 'change')
+                this.$store.state.buttonName = 'change'
+                this.$store.commit('editTicket', currentTicket)
                 this.dialog = true
             },
             deleteTicket(ticketObj){

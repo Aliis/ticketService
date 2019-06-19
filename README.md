@@ -1,4 +1,4 @@
-This is Spring-Boot/Vue restful demo project built with Vue CLI3, Vuetify, Vuex, Hibernate and H2 embedded database.
+This is Spring-Boot/Vue restful demo project built with Vue CLI3, Vuetify, Vuex, Hibernate and H2 embedded database. Contains functionality for creating, editing, deleting and sorting tickets.
 
 Run backend:
 
@@ -9,7 +9,7 @@ mvn spring-boot:run
 Backend runs on http://localhost:8088/
 
 
-Run fronend (For that Node.js should be installed):
+Run frontend (For that Node.js should be installed):
 
 In terminal 
 cd ticket/frontend

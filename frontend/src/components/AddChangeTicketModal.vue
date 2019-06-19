@@ -6,26 +6,26 @@
             <v-card-text>
                 <v-form>
                     <v-text-field
-                            v-model="formInputs.title"
+                            v-model="$store.state.formInputs.title"
                             label="Title"
                     ></v-text-field>
                     <v-text-field
-                            v-model="formInputs.email"
+                            v-model="$store.state.formInputs.email"
                             label="Email"
                     ></v-text-field>
                     <v-textarea
-                            v-model="formInputs.description"
+                            v-model="$store.state.formInputs.description"
                             label="Description"
                     ></v-textarea>
                     <v-switch
-                            :input-value="formInputs.state"
+                            :input-value="$store.state.formInputs.state"
                             :label="`In progress`"
                             color="primary"
-                            @change="toggle"
+                            @change="toggleState"
                     ></v-switch>
                     <v-layout align-center>
                         <v-flex xs3>
-                            Priority: {{formInputs.priority}}
+                            Priority: {{$store.state.formInputs.priority}}
                         </v-flex>
                         <v-flex xs9>
                             <v-btn
@@ -35,7 +35,7 @@
                                     dark
                                     small
                                     color="primary"
-                                    @click="formInputs.priority = n">
+                                    @click="$store.state.formInputs.priority = n">
                                 {{n}}
                             </v-btn>
                         </v-flex>
@@ -56,7 +56,7 @@
                 <v-btn
                         color="primary"
                         @click="submit">
-                    {{buttonName}}
+                    {{$store.state.buttonName}}
                 </v-btn>
             </v-card-actions>
         </v-card>
@@ -67,39 +67,26 @@
     import util from '../utils/util.js'
     export default {
         name: "new-ticket",
-        data() {
-            return {
-                formInputs: {
-                    title: '',
-                    email: '',
-                    description: '',
-                    priority: 1,
-                    id: 0,
-                    state: false
-                },
-                buttonName: 'create',
-            }
-        },
         mixins: [util],
+        props: ['visible'],
         methods: {
             submit () {
                 let params = this.getParams()
-                if (this.formInputs.id > 0) {
-                    Object.assign(params, {id: this.formInputs.id});
+                if (this.$store.state.formInputs.id > 0) {
+                    Object.assign(params, {id: this.$store.state.formInputs.id});
                 }
 
                 axios.post('/api/save', params)
                     .then(() => {
                         this.$store.commit('loadTicketList')
-                        this.resetForm()
+                        this.$store.commit('resetForm')
                         this.show = false
                     })
             },
-            toggle() {
-                this.formInputs.state = !this.formInputs.state
+            toggleState() {
+                this.$store.state.formInputs.state = !this.$store.state.formInputs.state
             }
         },
-        props: ['visible'],
         computed: {
             show: {
                 get () {
@@ -111,14 +98,6 @@
                     }
                 }
             }
-        },
-        mounted() {
-            this.$root.$on('editTicket', (ticketObj, name) => {
-                this.getTicketContent(ticketObj, name)
-            })
-            this.$root.$on('ticketCreated', () => {
-                this.resetForm()
-            })
         }
     }
 </script>

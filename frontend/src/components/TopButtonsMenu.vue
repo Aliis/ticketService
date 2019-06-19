@@ -32,7 +32,7 @@
                 </v-flex>
             </v-layout>
         </v-container>
-        <NewTicket :visible="dialog" @close="dialog=false"></NewTicket>
+        <new-ticket :visible="dialog" @close="dialog=false"></new-ticket>
     </div>
 </template>
 
@@ -50,7 +50,7 @@
         },
         methods: {
             createTicket() {
-                this.$root.$emit('ticketCreated')
+                this.$store.commit('resetForm')
                 this.dialog = true
             }
         }
